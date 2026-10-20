@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ material.title }} | StudyPortal{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">{{ material.subject }}</div><h1>{{ material.title }}</h1><p>{{ material.description or 'Study the PDF, then check your understanding with the quiz.' }}</p></div><a class="btn secondary" href="{{ url_for('student_dashboard') }}">← All materials</a></div>
+<div class="study-layout">
+  <section class="panel study-panel"><div class="feature-icon violet">▤</div><h2>Study material</h2><p>Open the uploaded PDF in your browser. If it does not display, use your browser's download or PDF viewer controls.</p><a class="btn secondary" target="_blank" rel="noopener" href="{{ url_for('view_pdf', material_id=material.id) }}">Open PDF ↗</a></section>
+  <section class="panel quiz-callout"><div class="feature-icon green">✓</div><div class="eyebrow">READY TO PRACTICE?</div><h2>{{ question_count }} questions available</h2><p>Answer each question, submit your quiz, and review the correct answers and explanations.</p>{% if question_count %}<a class="btn primary" href="{{ url_for('take_quiz', material_id=material.id) }}">Start quiz <span>→</span></a>{% else %}<button class="btn primary" disabled>No questions published</button>{% endif %}</section>
+</div>
+{% endblock %}

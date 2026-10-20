@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Quiz | {{ material.title }}{% endblock %}
+{% block content %}
+<div class="quiz-top"><a class="back-link" href="{{ url_for('student_material', material_id=material.id) }}">← Back to material</a><div class="eyebrow">{{ material.subject }}</div><h1>{{ material.title }} quiz</h1><p>Choose one answer for each question. You will see the correct answers after submitting.</p><div class="progress-track"><div id="quiz-progress" class="progress-fill" style="width:0%"></div></div><div class="progress-label"><span id="answered-count">0 of {{ questions|length }} answered</span><span>{{ questions|length }} questions</span></div></div>
+<form method="post" id="quiz-form">
+  {% for q in questions %}
+  <section class="question-card quiz-question" data-question="{{ q.id }}">
+    <div class="question-header"><span class="question-number">QUESTION {{ loop.index }}</span><span class="pill">{{ loop.index }} / {{ questions|length }}</span></div>
+    <h2>{{ q.question }}</h2>
+    <div class="quiz-options">
+      {% for letter, value in [('A',q.option_a),('B',q.option_b),('C',q.option_c),('D',q.option_d)] %}
+      <label class="quiz-option"><input type="radio" name="q_{{ q.id }}" value="{{ letter }}"><span class="option-letter">{{ letter }}</span><span class="option-text">{{ value }}</span><span class="option-check">○</span></label>
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+  <div class="submit-bar"><span>Take your time — review your selections before submitting.</span><button class="btn primary" type="submit">Submit quiz <span>→</span></button></div>
+</form>
+{% endblock %}
+{% block scripts %}<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('quiz-form');
+  if (!form) return;
+  const groups = [...form.querySelectorAll('.quiz-question')];
+  const update = () => {
+    const answered = groups.filter(g => g.querySelector('input:checked')).length;
+    document.getElementById('answered-count').textContent = `${answered} of ${groups.length} answered`;
+    document.getElementById('quiz-progress').style.width = `${groups.length ? answered / groups.length * 100 : 0}%`;
+  };
+  form.addEventListener('change', update);
+  form.addEventListener('submit', (e) => {
+    const unanswered = groups.filter(g => !g.querySelector('input:checked')).length;
+    if (unanswered && !confirm(`${unanswered} question(s) are unanswered. Submit anyway?`)) e.preventDefault();
+  });
+});
+</script>{% endblock %}

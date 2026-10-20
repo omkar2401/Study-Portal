@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Admin dashboard | StudyPortal{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><div class="eyebrow">ADMIN WORKSPACE</div><h1>Good to see you, {{ session.get('username') }}.</h1><p>Manage study materials and prepare quizzes for your students.</p></div>
+  <a class="btn primary" href="{{ url_for('upload_material') }}">＋ Upload PDF</a>
+</div>
+<div class="stats-grid">
+  <div class="stat-card"><span>Study materials</span><strong>{{ materials|length }}</strong><small>PDFs in your library</small></div>
+  <div class="stat-card"><span>Total questions</span><strong>{{ question_count }}</strong><small>Draft and published</small></div>
+  <div class="stat-card"><span>Student accounts</span><strong>{{ student_count }}</strong><small>Registered learners</small></div>
+</div>
+<div class="section-heading"><div><h2>Your materials</h2><p>Open a material to generate, review, and publish MCQs.</p></div></div>
+{% if materials %}
+<div class="material-grid">
+  {% for material in materials %}
+  <article class="material-card">
+    <div class="material-top"><div class="pdf-icon">PDF</div><span class="pill">{{ material.subject }}</span></div>
+    <h3>{{ material.title }}</h3><p>{{ material.description or 'No description added.' }}</p>
+    <div class="card-meta"><span>▤ {{ material.question_count }} questions</span><span>{{ material.created_at[:10] }}</span></div>
+    <a class="card-link" href="{{ url_for('material_detail', material_id=material.id) }}">Manage material <span>→</span></a>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state"><div class="empty-icon">▤</div><h3>Your library starts here</h3><p>Upload your first PDF, then generate AI questions or create them manually.</p><a class="btn primary" href="{{ url_for('upload_material') }}">Upload first PDF</a></div>
+{% endif %}
+{% endblock %}

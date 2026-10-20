@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Log in | StudyPortal{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <section class="auth-aside"><div class="eyebrow">WELCOME BACK</div><h1>Your next breakthrough starts here.</h1><p>Sign in to continue learning, or manage the study library as an administrator.</p><div class="aside-stat"><strong>Learn</strong><span>Practice · Improve · Repeat</span></div></section>
+  <section class="panel auth-panel">
+    <div class="panel-kicker">ACCOUNT ACCESS</div><h2>Log in</h2><p class="muted">Use your username or email address.</p>
+    <form method="post" class="form-stack">
+      <label>Username or email<input name="username" autocomplete="username" required autofocus></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="btn primary full" type="submit">Log in <span>→</span></button>
+    </form>
+    <p class="form-foot">New student? <a href="{{ url_for('register') }}">Create an account</a></p>
+  </section>
+</div>
+{% endblock %}

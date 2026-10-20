@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit question' if question else 'Add question' }} | StudyPortal{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">{{ material.subject }}</div><h1>{{ 'Edit question' if question else 'Add a question' }}</h1><p>Material: {{ material.title }}</p></div><a class="btn secondary" href="{{ url_for('material_detail', material_id=material.id) }}">← Back</a></div>
+<section class="panel question-editor">
+<form method="post" class="form-stack">
+  <label>Question<textarea name="question" rows="3" required>{{ question.question if question else '' }}</textarea></label>
+  {% for letter in 'ABCD' %}
+  <label>Option {{ letter }}<input name="option_{{ letter|lower }}" value="{{ question['option_' + letter|lower] if question else '' }}" required></label>
+  {% endfor %}
+  <label>Correct answer<select name="correct_option" required>{% for letter in 'ABCD' %}<option value="{{ letter }}" {% if question and question.correct_option == letter %}selected{% endif %}>Option {{ letter }}</option>{% endfor %}</select></label>
+  <label>Explanation <span class="optional">(optional)</span><textarea name="explanation" rows="3">{{ question.explanation if question else '' }}</textarea></label>
+  <div class="form-actions"><button class="btn primary" type="submit">Save question</button><a class="btn secondary" href="{{ url_for('material_detail', material_id=material.id) }}">Cancel</a></div>
+</form>
+</section>
+{% endblock %}

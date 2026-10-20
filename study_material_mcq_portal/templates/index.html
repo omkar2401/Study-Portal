@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}StudyPortal | Learn and practice{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">YOUR PERSONAL STUDY SPACE</div>
+    <h1>Study smarter.<br><span>Practice with confidence.</span></h1>
+    <p>Find study materials, practice multiple-choice questions, get instant feedback, and follow your progress — all in one place.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="{{ url_for('login') }}">Log in <span>→</span></a>
+      <a class="btn secondary" href="{{ url_for('register') }}">Create student account</a>
+    </div>
+    <div class="trust-row"><span>✓ PDF study library</span><span>✓ Instant MCQ feedback</span><span>✓ Saved results</span></div>
+  </div>
+  <div class="hero-card">
+    <div class="mock-window">
+      <div class="mock-head"><span class="dots">● ● ●</span><span>Practice preview</span></div>
+      <div class="mock-body">
+        <div class="mock-label">QUESTION 03 / 10</div>
+        <h3>Which option best describes active learning?</h3>
+        <div class="mock-option selected"><b>A</b> Reading without taking notes</div>
+        <div class="mock-option"><b>B</b> Engaging with and applying information</div>
+        <div class="mock-option"><b>C</b> Memorizing headings only</div>
+        <div class="mock-option"><b>D</b> Skipping practice questions</div>
+        <div class="mock-feedback">✓ Correct! Keep going.</div>
+      </div>
+    </div>
+    <div class="floating-badge">✦ Learn at your pace</div>
+  </div>
+</section>
+<section class="feature-grid">
+  <article class="feature"><div class="feature-icon violet">▤</div><h3>Study materials</h3><p>Read PDFs uploaded and organized by your admin.</p></article>
+  <article class="feature"><div class="feature-icon blue">✓</div><h3>Practice MCQs</h3><p>Answer questions and immediately see the correct option.</p></article>
+  <article class="feature"><div class="feature-icon green">↗</div><h3>Track progress</h3><p>Review your quiz scores and past attempts anytime.</p></article>
+</section>
+{% endblock %}

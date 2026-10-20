@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Error {{ code }} | StudyPortal{% endblock %}
+{% block content %}
+<div class="empty-state error-state"><div class="empty-icon">{{ code }}</div><h1>Something went wrong</h1><p>{{ message }}</p><a class="btn primary" href="{{ url_for('index') }}">Go home</a></div>
+{% endblock %}

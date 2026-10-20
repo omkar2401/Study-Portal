@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Student registration | StudyPortal{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <section class="auth-aside"><div class="eyebrow">START LEARNING</div><h1>Build knowledge one question at a time.</h1><p>Create your student account to access published materials and quizzes.</p><div class="aside-stat"><strong>One account</strong><span>Your study space and saved results</span></div></section>
+  <section class="panel auth-panel">
+    <div class="panel-kicker">STUDENT ACCOUNT</div><h2>Create account</h2><p class="muted">All fields are required.</p>
+    <form method="post" class="form-stack">
+      <label>Username<input name="username" minlength="3" autocomplete="username" required></label>
+      <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+      <label>Password<input name="password" type="password" minlength="8" autocomplete="new-password" required><small>Use at least 8 characters.</small></label>
+      <label>Confirm password<input name="confirm_password" type="password" minlength="8" autocomplete="new-password" required></label>
+      <button class="btn primary full" type="submit">Create student account <span>→</span></button>
+    </form>
+    <p class="form-foot">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+  </section>
+</div>
+{% endblock %}

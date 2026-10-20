@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Upload PDF | StudyPortal{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">STUDY LIBRARY</div><h1>Upload study material</h1><p>Add a PDF to the student library. You can generate questions after upload.</p></div><a class="btn secondary" href="{{ url_for('admin_dashboard') }}">← Back</a></div>
+<div class="form-layout">
+  <section class="panel">
+    <form method="post" enctype="multipart/form-data" class="form-stack">
+      <label>Material title<input name="title" placeholder="e.g. Introduction to SQL" required></label>
+      <label>Subject or category<input name="subject" placeholder="e.g. Database Management" required></label>
+      <label>Description <span class="optional">(optional)</span><textarea name="description" rows="3" placeholder="Briefly describe this material"></textarea></label>
+      <label>PDF file<div class="file-drop"><span class="file-symbol">↑</span><strong>Choose a PDF from your computer</strong><small>PDF only · maximum 20 MB</small><input type="file" name="pdf" accept="application/pdf,.pdf" required></div></label>
+      <button class="btn primary" type="submit">Upload material <span>→</span></button>
+    </form>
+  </section>
+  <aside class="info-panel"><div class="feature-icon violet">✦</div><h3>What happens next?</h3><ol><li>The app saves your PDF locally.</li><li>It extracts selectable text from the PDF.</li><li>You can ask AI to draft MCQs from that text.</li><li>Review every question before publishing it.</li></ol><p class="notice">Scanned PDFs may not contain selectable text. This starter project does not include OCR.</p></aside>
+</div>
+{% endblock %}

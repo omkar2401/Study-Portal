@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Student dashboard | StudyPortal{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome back, {{ session.get('username') }}.</h1><p>Choose a study material and keep building your knowledge.</p></div><a class="btn secondary" href="{{ url_for('student_results') }}">View my results ↗</a></div>
+<div class="student-banner"><div><div class="eyebrow">SMALL STEPS, BIG PROGRESS</div><h2>Learn a little. Practice a little. Improve every day.</h2><p>Open a PDF to study, then test what you know with a short quiz.</p></div><div class="banner-art">✦</div></div>
+<div class="section-heading"><div><h2>Available study materials</h2><p>Only materials with published questions appear here.</p></div></div>
+{% if materials %}
+<div class="material-grid">
+  {% for material in materials %}
+  <article class="material-card">
+    <div class="material-top"><div class="pdf-icon">PDF</div><span class="pill">{{ material.subject }}</span></div>
+    <h3>{{ material.title }}</h3><p>{{ material.description or 'Open this material to study and practice.' }}</p>
+    <div class="card-meta"><span>✓ {{ material.question_count }} questions</span><span>{{ material.created_at[:10] }}</span></div>
+    <a class="card-link" href="{{ url_for('student_material', material_id=material.id) }}">Study this material <span>→</span></a>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state"><div class="empty-icon">▤</div><h3>No published quizzes yet</h3><p>Your admin needs to publish questions before a material appears here. Check again later.</p></div>
+{% endif %}
+{% if recent %}
+<div class="section-heading"><div><h2>Recent attempts</h2><p>Your latest quiz activity.</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Material</th><th>Score</th><th>Date</th></tr></thead><tbody>{% for attempt in recent %}<tr><td>{{ attempt.title }}</td><td><strong>{{ attempt.score }}/{{ attempt.total }}</strong></td><td>{{ attempt.created_at }}</td></tr>{% endfor %}</tbody></table></div>
+{% endif %}
+{% endblock %}

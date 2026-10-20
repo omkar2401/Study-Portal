@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Quiz results | StudyPortal{% endblock %}
+{% block content %}
+<section class="result-hero">
+  <div class="result-icon">{{ '✓' if score / total >= 0.7 else '✦' }}</div>
+  <div class="eyebrow">QUIZ COMPLETED</div><h1>{{ 'Great work!' if score / total >= 0.7 else 'Keep practicing!' }}</h1>
+  <p>You finished the quiz for <strong>{{ material.title }}</strong>.</p>
+  <div class="score-ring"><strong>{{ score }}/{{ total }}</strong><span>Correct</span></div>
+  <div class="score-caption">{{ ((score / total) * 100)|round|int }}% score</div>
+  <div class="result-actions"><a class="btn primary" href="{{ url_for('take_quiz', material_id=material.id) }}">Try again ↻</a><a class="btn secondary" href="{{ url_for('student_dashboard') }}">Back to dashboard</a></div>
+</section>
+<div class="section-heading"><div><h2>Answer review</h2><p>Review each response and learn from any mistakes.</p></div></div>
+<div class="question-list">
+{% for item in result %}
+  <article class="question-card result-question">
+    <div class="question-header"><span class="question-number">QUESTION {{ loop.index }}</span><span class="pill {{ 'published' if item.is_correct else 'incorrect' }}">{{ 'Correct' if item.is_correct else 'Incorrect' }}</span></div>
+    <h3>{{ item.question }}</h3>
+    <div class="option-preview">
+      {% for letter in 'ABCD' %}
+      <div class="preview-option {% if letter == item.correct %}answer-key{% elif letter == item.selected and not item.is_correct %}wrong-key{% endif %}">
+        <b>{{ letter }}</b>{{ item.options[letter] }}
+        {% if letter == item.correct %}<span>Correct answer</span>{% elif letter == item.selected %}<span>Your answer</span>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% if not item.selected %}<p class="notice">You did not answer this question.</p>{% endif %}
+    {% if item.explanation %}<p class="explanation"><strong>Explanation:</strong> {{ item.explanation }}</p>{% endif %}
+  </article>
+{% endfor %}
+</div>
+{% endblock %}

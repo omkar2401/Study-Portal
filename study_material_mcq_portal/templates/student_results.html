@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}My results | StudyPortal{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">YOUR PROGRESS</div><h1>My quiz results</h1><p>Review your previous attempts and scores.</p></div><a class="btn secondary" href="{{ url_for('student_dashboard') }}">← Dashboard</a></div>
+{% if attempts %}
+<div class="table-wrap"><table><thead><tr><th>Study material</th><th>Subject</th><th>Score</th><th>Percentage</th><th>Date</th></tr></thead><tbody>
+{% for a in attempts %}<tr><td><strong>{{ a.title }}</strong></td><td>{{ a.subject }}</td><td>{{ a.score }}/{{ a.total }}</td><td><span class="score-chip">{{ ((a.score / a.total) * 100)|round|int }}%</span></td><td>{{ a.created_at }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}
+<div class="empty-state"><div class="empty-icon">↗</div><h3>Your results will appear here</h3><p>Complete your first quiz to start tracking your progress.</p><a class="btn primary" href="{{ url_for('student_dashboard') }}">Browse materials</a></div>
+{% endif %}
+{% endblock %}
